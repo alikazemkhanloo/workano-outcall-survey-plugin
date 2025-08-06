@@ -84,7 +84,18 @@ class OutcallSurveyLogHandler(handler.Handler):
             queue_number = self._agi.get_variable('WAZO_ENTRY_EXTEN') or 'default_queue_number'
             call_id = self._agi.get_variable('WAZO_SIP_CALL_ID') or 'default_call_id'
             linked_id = self._agi.get_variable('CHANNEL(linkedid)') or 'default_linked_id'
-
+            print(
+                tenant_uuid,
+                agent_id,
+                queue_exten,
+                caller_id,
+                agent_number,
+                queue_id,
+                queue_name,
+                queue_number,
+                call_id,
+                linked_id,
+            )
 
             objects_workano_outcall_survey.QueueSurvey(self._agi, self._cursor, tenant_uuid, agent_id,
                                         agent_number, queue_id, queue_name, queue_number, queue_exten, caller_id,

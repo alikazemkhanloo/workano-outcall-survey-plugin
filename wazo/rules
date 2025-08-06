@@ -13,9 +13,9 @@ package)
     ;;
 
 install)
-    # cp -f wazo_agid/handlers/outcall_survey.py ${WAZO_AGID}/handlers/outcall_survey.py
+    cp -f wazo_agid/handlers/outcall_survey.py ${WAZO_AGID}/handlers/outcall_survey.py
     cp -f wazo_agid/modules/did_outcall_set_features.py ${WAZO_AGID}/modules/did_outcall_set_features.py
-    # cp -f wazo_agid/modules/outcall_survey_log.py ${WAZO_AGID}/modules/outcall_survey_log.py
+    cp -f wazo_agid/modules/outcall_survey_log.py ${WAZO_AGID}/modules/outcall_survey_log.py
     # cp -f wazo_agid/modules/outcall_survey_save_voicemail.py ${WAZO_AGID}/modules/outcall_survey_save_voicemail.py
     systemctl restart wazo-confd
     systemctl restart wazo-agid
@@ -27,9 +27,9 @@ install)
 uninstall)
     rm -f /etc/wazo-confd/conf.d/50-workano-outcall-survey-plugin.yml
     rm -f /etc/asterisk/extensions_extra.d/outcall-survey.conf
-    # rm -f  ${WAZO_AGID}/handlers/outcall_survey.py
+    rm -f  ${WAZO_AGID}/handlers/outcall_survey.py
     rm -f  ${WAZO_AGID}/modules/did_outcall_set_features.py
-    # rm -f  ${WAZO_AGID}/modules/outcall_survey_log.py
+    rm -f  ${WAZO_AGID}/modules/outcall_survey_log.py
     # rm -f  ${WAZO_AGID}/modules/outcall_survey_save_voicemail.py
 
     systemctl restart wazo-confd
