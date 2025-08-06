@@ -13,7 +13,6 @@ package)
     ;;
 
 install)
-    ls
     # cp -f wazo_agid/handlers/outcall_survey.py ${WAZO_AGID}/handlers/outcall_survey.py
     cp -f wazo_agid/modules/did_outcall_set_features.py ${WAZO_AGID}/modules/did_outcall_set_features.py
     # cp -f wazo_agid/modules/outcall_survey_log.py ${WAZO_AGID}/modules/outcall_survey_log.py
