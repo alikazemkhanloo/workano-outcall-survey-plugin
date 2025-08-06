@@ -1,0 +1,449 @@
+paths:
+  /surveys:
+    get:
+      summary: List All Surveys
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /surveys/agent/{agent_number}:
+    get:
+      summary: List All Surveys by Agent Number
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/agentnumber"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /surveys/queue/{queue_id}:
+    get:
+      summary: List All Surveys by queue_id
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/queueid"
+
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /surveys/average/agent/{agent_number}:
+    get:
+      summary: Get Avarage of rating by Agent Number
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/agentnumber"
+        - name: from
+          in: query
+          description: Start Search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: until
+          in: query
+          description: End search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /surveys/average/queue/{queue_id}:
+    get:
+      summary: Get Avarage of rating by queue_id
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/queueid"
+        - name: from
+          in: query
+          description: Start Search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: until
+          in: query
+          description: End search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /surveys/average/allqueue:
+    get:
+      summary: Get Avarage of rating for all queue
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - name: from
+          in: query
+          description: Start Search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: until
+          in: query
+          description: End search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /surveys/average/allagent:
+    get:
+      summary: Get Avarage of rating for all agent
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - name: from
+          in: query
+          description: Start Search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: until
+          in: query
+          description: End search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /surveys/average/queue/{queue_id}/agent/{agent_number}:
+    get:
+      summary: Get Avarage of rating by queue_id and  specific agent_id
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/queueid"
+        - $ref: "#/parameters/agentnumber"
+        - name: from
+          in: query
+          description: Start Search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: until
+          in: query
+          description: End search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /surveys/average/queue/{queue_id}/agents:
+    get:
+      summary: Get Avarage of rating by queue_id for all agents
+      description: "**Required ACL:** `confd.survey.read`"
+      tags:
+        - surveys
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/queueid"
+        - name: from
+          in: query
+          description: Start Search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: until
+          in: query
+          description: End search Date
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/SurveyItems"
+
+  /queue-features:
+    get:
+      summary: List All Queue Features
+      description: "**Required ACL:** `confd.queuefeatures.read`"
+      tags:
+        - queue-features
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/QueueFeaturesItems"
+    post:
+      summary: Add Queue Features
+      description: "**Required ACL:** `confd.queuefeatures.create`"
+      tags:
+        - queue-features
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+      requestBody:
+        description: Created queue features object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueueFeatures"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/QueueFeaturesItems"
+
+  /queue-features/{uuid}:
+    get:
+      summary: Get Queue Features by ID
+      description: "**Required ACL:** `confd.queuefeatures.read`"
+      tags:
+        - queue-features
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/queuefeaturesid"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/QueueFeaturesItems"
+    put:
+      summary: Update Queue Features for specific ID
+      description: "**Required ACL:** `confd.queuefeatures.update`"
+      tags:
+        - queue-features
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/queuefeaturesid"
+      requestBody:
+        description: Updated queue features object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueueFeatures"
+      responses:
+        "204":
+          description: Successful operation
+    delete:
+      summary: Delete Queue Features by ID
+      description: "**Required ACL:** `confd.queuefeatures.delete`"
+      tags:
+        - queue-features
+      parameters:
+        - $ref: "#/parameters/tenantuuid"
+        - $ref: "#/parameters/queuefeaturesid"
+      responses:
+        "204":
+          description: Successful operation
+
+components:
+  schemas:
+    QueueFeatures:
+      type: object
+      properties:
+        queue_id:
+          type: string
+          example: 1
+        play_agentnumber_enable:
+          type: string
+          example: 0
+        queue_survey_enable:
+          type: string
+          example: 1
+      xml:
+        name: QueueFeatures
+
+definitions:
+  QueueFeatures:
+    title: QueueFetures
+    allOf:
+      - properties:
+          queue_id:
+            type: integer
+            readOnly: true
+            description: The id of queue
+          play_agentnumber_enable:
+            type: string
+            readOnly: true
+            description: The play agentnumberenable
+          queue_survey_enable:
+            type: string
+            readOnly: true
+            description: The queue surveyenable
+
+  SurveyItems:
+    title: SurveyItems
+    allOf:
+      - properties:
+          id:
+            type: integer
+            readOnly: true
+            description: The id of the survey list
+          tenant_uuid:
+            type: string
+            readOnly: true
+            description: The tenant UUId
+          agent_id:
+            type: string
+            readOnly: true
+            description: The tenant UUId
+          agent_number:
+            type: string
+            readOnly: true
+            description: The agent_number
+          queue_id:
+            type: string
+            readOnly: true
+            description: The queue_id
+          queue_name:
+            type: string
+            readOnly: true
+            description: The queue_name
+          queue_number:
+            type: string
+            readOnly: true
+            description: queue_number
+          call_id:
+            type: string
+            readOnly: true
+            description: call_id
+          timestamp:
+            type: string
+            readOnly: true
+            description: The timestamp
+          rate:
+            type: string
+            readOnly: true
+            description: The rate
+
+  QueueFeaturesItems:
+    title: SurveyItems
+    allOf:
+      - properties:
+          id:
+            type: integer
+            readOnly: true
+            description: The id of the survey list
+          tenant_uuid:
+            type: string
+            readOnly: true
+            description: The tenant UUId
+          queue_id:
+            type: string
+            readOnly: true
+            description: The queue_id
+          play_agentnumber_enable:
+            type: string
+            readOnly: true
+            description: The play agentnumberenable
+          queue_survey_enable:
+            type: string
+            readOnly: true
+            description: The queue surveyenable
+
+parameters:
+  tenantuuid:
+    name: Wazo-Tenant
+    type: string
+    in: header
+    description: "The tenant's UUID, defining the ownership of a given resource."
+    required: false
+  queueid:
+    required: true
+    type: integer
+    name: queue_id
+    in: path
+    description: Queue's ID
+  agentnumber:
+    required: true
+    type: integer
+    name: agent_number
+    in: path
+    description: Agent's Number
+  queuefeaturesid:
+    required: true
+    type: integer
+    name: uuid
+    in: path
+    description: Queuefeatures's ID
