@@ -6,6 +6,7 @@ from wazo_agid import agid, objects_workano_outcall_survey
 
 def did_outcall_set_features(agi, cursor, args):
     destination_id = agi.get_variable('WAZO_DSTID')
+    print('destination_id', destination_id)
     if destination_id =='09104719336':
         agi.set_variable('WAZO_SURVEY_ENABLE', '1')
     

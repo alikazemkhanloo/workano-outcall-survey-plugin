@@ -17,6 +17,10 @@ install)
     cp -f wazo_agid/modules/outcall_survey_log.py ${WAZO_AGID}/modules/outcall_survey_log.py
     cp -f wazo_agid/modules/outcall_survey_save_voicemail.py ${WAZO_AGID}/modules/outcall_survey_save_voicemail.py
     systemctl restart wazo-confd
+    systemctl restart wazo-agid
+
+    asterisk -x 'dialplan reload'
+
     ;;
 
 uninstall)
@@ -27,6 +31,9 @@ uninstall)
     rm -f  ${WAZO_AGID}/modules/outcall_survey_save_voicemail.py
 
     systemctl restart wazo-confd
+    systemctl restart wazo-agid
+
+    asterisk -x 'dialplan reload'
     ;;
 
 postrm) ;;
