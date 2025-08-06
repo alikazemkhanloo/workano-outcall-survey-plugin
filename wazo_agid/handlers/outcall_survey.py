@@ -50,7 +50,7 @@ class OutcallSurveyVoiceMessageHandler(handler.Handler):
                             self._agi.verbose(f"[MATCH] Found msg_id: {msg_id} for caller ID {caller_id}")
                             print(f"[MATCH] Found msg_id: {msg_id} for caller ID {caller_id}")
                             message_id = msg_id
-                            objects_workano_outcall_survey.QueueSurveyUpdateMessageId(self._cursor, linked_id, message_id, voicemail_id)
+                            objects_workano_outcall_survey.OutcallSurveyUpdateMessageId(self._cursor, linked_id, message_id, voicemail_id)
                             return None
                         else:
                             self._agi.verbose('msgid not matched')
