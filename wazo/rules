@@ -1,4 +1,5 @@
 #!/bin/sh
+WAZO_AGID="/usr/lib/python3/dist-packages/wazo_agid/"
 
 case "$1" in
 build)
