@@ -1,12 +1,12 @@
 from wazo_confd.helpers.validator import Validator, ValidationGroup
 
 
-class SurveyValidator(Validator):
+class OutcallSurveyValidator(Validator):
     def validate(self, model):
         return
 
 
-def build_survey_validator():
-    survey_validator = SurveyValidator()
-    return ValidationGroup(create=[survey_validator], edit=[survey_validator])
+def build_outcall_survey_validator():
+    outcall_survey_validator = OutcallSurveyValidator()
+    return ValidationGroup(create=[outcall_survey_validator], edit=[outcall_survey_validator])
 

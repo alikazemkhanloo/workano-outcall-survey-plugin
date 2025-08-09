@@ -2,7 +2,7 @@ from xivo_dao.helpers.persistor import BasePersistor
 from xivo_dao.resources.utils.search import CriteriaBuilderMixin
 from .model import SurveyModel
 
-class SurveyPersistor(CriteriaBuilderMixin, BasePersistor):
+class OutcallSurveyPersistor(CriteriaBuilderMixin, BasePersistor):
     _search_table = SurveyModel
 
     def __init__(self, session, survey_search, tenant_uuids=None):

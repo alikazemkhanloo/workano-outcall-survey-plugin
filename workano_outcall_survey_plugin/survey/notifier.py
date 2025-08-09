@@ -1,7 +1,7 @@
 from wazo_confd import bus, sysconfd
 
 
-class SurveyNotifier:
+class OutcallSurveyNotifier:
     def __init__(self, bus, sysconfd):
         self.bus = bus
         self.sysconfd = sysconfd
@@ -19,6 +19,6 @@ class SurveyNotifier:
         pass
 
 
-def build_survey_notifier():
-    return SurveyNotifier(bus, sysconfd)
+def build_outcall_survey_notifier():
+    return OutcallSurveyNotifier(bus, sysconfd)
 
