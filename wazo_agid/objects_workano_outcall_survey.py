@@ -75,12 +75,12 @@ class QueueSurvey(object):
         timestamp = ct.strftime("%Y-%m-%d %H:%M:%S")
 
         survey_log_columns = [
-            'tenant_uuid', 'agent_id', 'agent_number', 'caller_id', 'linked_id', 'call_id', 'timestamp', 'rate'
+            'tenant_uuid', 'caller_id', 'linked_id', 'call_id', 'timestamp', 'rate'
         ]
 
-        query = "INSERT INTO plugin_survey ({}) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)".format(
+        query = "INSERT INTO plugin_survey ({}) VALUES (%s, %s, %s, %s, %s, %s)".format(
             ', '.join(survey_log_columns))
-        arguments = (self.tenant_uuid, self.agent_id, self.agent_number, self.destination_number, self.linked_id, self.call_id, timestamp, self.vote_number)
+        arguments = (self.tenant_uuid, self.destination_number, self.linked_id, self.call_id, timestamp, self.vote_number)
 
         self.cursor.execute(query, arguments)
 
