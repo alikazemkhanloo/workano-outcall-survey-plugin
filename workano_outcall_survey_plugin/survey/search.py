@@ -1,14 +1,14 @@
 from xivo_dao.resources.utils.search import SearchConfig
 from xivo_dao.resources.utils.search import SearchSystem
 
-from .model import SurveyModel
+from .model import OutcallSurveyModel
 
 survey_config = SearchConfig(
-    table=SurveyModel,
+    table=OutcallSurveyModel,
     columns={
-        'id': SurveyModel.id,
-        'tenant_uuid': SurveyModel.tenant_uuid,
-        'queue_id': SurveyModel.queue_id,
+        'id': OutcallSurveyModel.id,
+        'tenant_uuid': OutcallSurveyModel.tenant_uuid,
+        'queue_id': OutcallSurveyModel.queue_id,
     },
     default_sort='id',
 )
