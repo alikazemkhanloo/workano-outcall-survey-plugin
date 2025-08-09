@@ -3,11 +3,11 @@ WAZO_AGID="/usr/lib/python3/dist-packages/wazo_agid/"
 
 case "$1" in
 build)
-    # python3 setup.py bdist -d dist/python3
+    python3 setup.py bdist -d dist/python3
     ;;
 
 package)
-    # tar xvf dist/python3/workano-outcall-survey-plugin-*.tar.gz -C ${pkgdir}
+    tar xvf dist/python3/workano-outcall-survey-plugin-*.tar.gz -C ${pkgdir}
     cp -R etc ${pkgdir}/
     cp -R wazo_agid ${pkgdir}/
     ;;
