@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy_utils import database_exists, create_database
-from survey.model import SurveyModel, OutcallSurveyModel
+from .survey.model import SurveyModel, OutcallSurveyModel
 
 Base = declarative_base()
 
