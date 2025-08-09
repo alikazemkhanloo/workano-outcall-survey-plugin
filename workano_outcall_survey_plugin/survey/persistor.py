@@ -5,9 +5,9 @@ from .model import OutcallSurveyModel
 class OutcallSurveyPersistor(CriteriaBuilderMixin, BasePersistor):
     _search_table = OutcallSurveyModel
 
-    def __init__(self, session, survey_search, tenant_uuids=None):
+    def __init__(self, session, outcall_survey_search, tenant_uuids=None):
         self.session = session
-        self.search_system = survey_search
+        self.search_system = outcall_survey_search
         self.tenant_uuids = tenant_uuids
 
     def _find_query(self, criteria):

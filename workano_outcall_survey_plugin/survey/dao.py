@@ -1,14 +1,13 @@
 from xivo_dao.helpers.db_manager import daosession
 from .persistor import OutcallSurveyPersistor
-from .search import survey_search
+from .search import outcall_survey_search
 
 from datetime import timedelta
 
 
 @daosession
 def _persistor(session, tenant_uuids=None):
-    return OutcallSurveyPersistor(session, survey_search, tenant_uuids)
-
+    return OutcallSurveyPersistor(session, outcall_survey_search, tenant_uuids)
 
 
 def create(outcall_survey):
