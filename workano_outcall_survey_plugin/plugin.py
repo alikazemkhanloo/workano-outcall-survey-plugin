@@ -17,13 +17,13 @@ class Plugin:
         outcall_survey_service= build_outcall_survey_service()
         api.add_resource(
             OutcallSurveyListResource,
-            '/outcall-survey',
+            '/outcall-surveys',
             resource_class_args=(outcall_survey_service,)
         )
 
         api.add_resource(
             OutcallSurveyItemResource,
-            '/outcall-survey/<id>',
+            '/outcall-surveys/<id>',
             resource_class_args=(outcall_survey_service,)
         )
 
