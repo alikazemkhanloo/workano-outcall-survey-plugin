@@ -20,3 +20,12 @@ class SurveySchema(BaseSchema):
     vm_message_id = fields.String()
     voicemail_id = fields.String()
 
+
+
+    
+class OutcallSurveySchema(BaseSchema):
+    id = fields.Int(required=True)
+    users = fields.List(fields.String(), required=False)
+    enabled = fields.Bool(required=True, missing=False)
+    voicemail_threshold = fields.Int(allow_none=True)
+    voicemail_id = fields.String(allow_none=True, validate=lambda s: len(s) <= 50)
