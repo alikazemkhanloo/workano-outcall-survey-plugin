@@ -20,6 +20,7 @@ class OutcallSurveyModel(Base):
     __tablename__ = 'plugin_outcall_survey'
 
     id = Column(Integer, nullable=False)
+    tenant_uuid = Column(UUIDAsString(36), nullable=False)
     users = Column(ARRAY(String))
     enabled = Column(Boolean, nullable=False, default=False)
     voicemail_threshold = Column(Integer, nullable=True)
