@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-from xmlrpc.client import Boolean
 
 from sqlalchemy.schema import (
     Column,
@@ -8,7 +7,7 @@ from sqlalchemy.schema import (
     PrimaryKeyConstraint,
     UniqueConstraint,
 )
-from sqlalchemy.types import Integer, String
+from sqlalchemy.types import Integer, String, Boolean
 from xivo_dao.helpers.db_manager import Base, UUIDAsString
 from sqlalchemy.dialects.postgresql import ARRAY
 
