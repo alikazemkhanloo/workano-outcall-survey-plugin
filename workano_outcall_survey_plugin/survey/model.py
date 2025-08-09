@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from xmlrpc.client import Boolean
 
 from sqlalchemy.schema import (
     Column,
@@ -9,10 +10,21 @@ from sqlalchemy.schema import (
 )
 from sqlalchemy.types import Integer, String
 from xivo_dao.helpers.db_manager import Base, UUIDAsString
+from sqlalchemy.dialects.postgresql import ARRAY
 
 
 from ..db import Base
 
+
+
+class OutcallSurveyModel(Base):
+    __tablename__ = 'plugin_outcall_survey'
+
+    id = Column(Integer, nullable=False)
+    users = Column(ARRAY(String))
+    enabled = Column(Boolean, nullable=False, default=False)
+    voicemail_threshold = Column(Integer, nullable=True)
+    voicemail_id=Column(String(50), nullable=True)
 
 class SurveyModel(Base):
     __tablename__ = 'plugin_survey'

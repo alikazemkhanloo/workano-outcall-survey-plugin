@@ -15,13 +15,30 @@ logger = logging.getLogger(__name__)
 AGENT_CHANNEL_RE = re.compile(r'^Local/id-(\d+)@agentcallback-[a-f0-9]+;1$')
 RECORDINGS_DIRECTORY = '/var/spool/asterisk/voicemail'
 
+class OutcallSurveyHandler(handler.Handler):
+    def execute(self):
+        user_uuid = self._agi.get_variable('WAZO_USERUUID')
+        call_direction = self._agi.get_variable('WAZO_CALL_DIRECTION') #  == outbound
+        if call_direction != 'outbound':
+            return
+        outcall_survey = objects_workano_outcall_survey.OutcallSurvey(self._cursor, user_uuid)
+        if outcall_survey.enabled:
+            self._agi.set_variable('WAZO_SURVEY_ENABLE', '1')
+            if outcall_survey.voicemail_id:
+                self._agi.set_variable('OUTCALL_SURVEY_VOICEMAIL_MAILBOX', outcall_survey.voicemail_mailbox)
+                self._agi.set_variable('OUTCALL_SURVEY_VOICEMAIL_ID', outcall_survey.voicemail_id)
+                self._agi.set_variable('OUTCALL_SURVEY_VOICEMAIL_CONTEXT', outcall_survey.voicemail_context)
+                self._agi.set_variable('OUTCALL_SURVEY_VOICEMAIL_THRESHOLD', outcall_survey.voicemail_threshold)
+                
+
+
 class OutcallSurveyVoiceMessageHandler(handler.Handler):
     def execute(self):
-        caller_id = self._agi.get_variable('CALLERID(num)')
+        destination_number = self._agi.get_variable('WAZO_DSTNUM')
         linked_id = self._agi.get_variable('CHANNEL(linkedid)') or 'default_linked_id'
-        mailbox = self._agi.get_variable('WAZO_SURVEY_VOICEMAIL_MAILBOX')
-        voicemail_id = self._agi.get_variable('WAZO_SURVEY_VOICEMAIL_MAILBOX_ID')
-        vm_context = self._agi.get_variable('WAZO_SURVEY_VOICEMAIL_CONTEXT')
+        mailbox = self._agi.get_variable('OUTCALL_SURVEY_VOICEMAIL_MAILBOX')
+        voicemail_id = self._agi.get_variable('OUTCALL_SURVEY_VOICEMAIL_ID')
+        vm_context = self._agi.get_variable('OUTCALL_SURVEY_VOICEMAIL_CONTEXT')
         inbox_path = os.path.join(RECORDINGS_DIRECTORY, vm_context, mailbox, 'INBOX')
         self._agi.verbose(f'inbox_path {inbox_path}, LINKEDID: {linked_id}')
         if not os.path.exists(inbox_path):
@@ -43,12 +60,12 @@ class OutcallSurveyVoiceMessageHandler(handler.Handler):
                 match = re.search(r'callerid=".*?"\s*<(\d+)>', content)
                 if match:
                     file_caller_id = match.group(1)
-                    if caller_id in file_caller_id:
+                    if destination_number in file_caller_id:
                         msgid_match = re.search(r'^msg_id=(.+)', content, re.MULTILINE)
                         if msgid_match:
                             msg_id = msgid_match.group(1).strip()
-                            self._agi.verbose(f"[MATCH] Found msg_id: {msg_id} for caller ID {caller_id}")
-                            print(f"[MATCH] Found msg_id: {msg_id} for caller ID {caller_id}")
+                            self._agi.verbose(f"[MATCH] Found msg_id: {msg_id} for caller ID {destination_number}")
+                            print(f"[MATCH] Found msg_id: {msg_id} for caller ID {destination_number}")
                             message_id = msg_id
                             objects_workano_outcall_survey.OutcallSurveyUpdateMessageId(self._cursor, linked_id, message_id, voicemail_id)
                             return None
@@ -70,34 +87,11 @@ class OutcallSurveyLogHandler(handler.Handler):
 
         if vote_number:
             tenant_uuid = self._agi.get_variable('WAZO_TENANT_UUID') or 'default_tenant_uuid'
-            agent_id = self._agi.get_variable('MEMBERNAME')
-            queue_exten = self._agi.get_variable('XIVO_REAL_NUMBER') or 'default_queue_exten'
-            caller_id = self._agi.get_variable('WAZO_SRCNUM') or 'default_caller_id'
-            agent_number = 'unknown_agent_number'
+            destination_number = self._agi.get_variable('WAZO_DSTNUM') or 'default_caller_id'
 
-            if agent_id:
-                agent_id = agent_id.split('/')[1]
-                agent_number = agent_id
-
-            queue_id = self._agi.get_variable('WAZO_DSTID') or 'default_queue_id'
-            queue_name = self._agi.get_variable('WAZO_QUEUENAME') or 'default_queue_name'
-            queue_number = self._agi.get_variable('WAZO_ENTRY_EXTEN') or 'default_queue_number'
             call_id = self._agi.get_variable('WAZO_SIP_CALL_ID') or 'default_call_id'
             linked_id = self._agi.get_variable('CHANNEL(linkedid)') or 'default_linked_id'
-            print(
-                tenant_uuid,
-                agent_id,
-                queue_exten,
-                caller_id,
-                agent_number,
-                queue_id,
-                queue_name,
-                queue_number,
-                call_id,
-                linked_id,
-            )
 
-            objects_workano_outcall_survey.QueueSurvey(self._agi, self._cursor, tenant_uuid, agent_id,
-                                        agent_number, queue_id, queue_name, queue_number, queue_exten, caller_id,
+            objects_workano_outcall_survey.QueueSurvey(self._agi, self._cursor, tenant_uuid, destination_number,
                                         linked_id, call_id, vote_number)
             logger.debug('handler saved ')
