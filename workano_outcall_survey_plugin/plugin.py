@@ -1,6 +1,6 @@
 import logging
 
-from workano_outcall_survey_plugin.survey.resource import OutcallSurveyListResource
+from workano_outcall_survey_plugin.survey.resource import OutcallSurveyItemResource, OutcallSurveyListResource
 
 from .db import init_db
 
@@ -17,6 +17,12 @@ class Plugin:
         api.add_resource(
             OutcallSurveyListResource,
             '/outcall-survey',
+            # resource_class_args=(queuefeature_service,)
+        )
+
+        api.add_resource(
+            OutcallSurveyItemResource,
+            '/outcall-survey/<id>',
             # resource_class_args=(queuefeature_service,)
         )
 

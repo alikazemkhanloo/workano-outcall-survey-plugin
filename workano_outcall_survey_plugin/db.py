@@ -16,6 +16,5 @@ def init_db(db_uri):
     if not database_exists(engine.url):
         logger.info('creating db')
         create_database(engine.url)
-    print(Base.metadata.tables.keys())
     Base.metadata.create_all(engine)
     ScopedSession.configure(bind=engine)
