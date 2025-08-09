@@ -5,8 +5,8 @@ from flask_restful import Resource
 from wazo_confd.auth import required_acl
 from wazo_confd.helpers.restful import ItemResource, ListResource
 
-from .model import SurveyModel, QueueFeaturesModel
-from .schema import SurveySchema, QueueFeaturesSchema
+# from .model import SurveyModel, QueueFeaturesModel
+# from .schema import SurveySchema, QueueFeaturesSchema
 import json
 
 logger = logging.getLogger(__name__)
