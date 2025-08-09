@@ -25,6 +25,10 @@ class OutcallSurveyModel(Base):
     voicemail_threshold = Column(Integer, nullable=True)
     voicemail_id=Column(String(50), nullable=True)
 
+    __table_args__ = (
+        PrimaryKeyConstraint('id'), 
+    )
+
 class SurveyModel(Base):
     __tablename__ = 'plugin_survey'
 
