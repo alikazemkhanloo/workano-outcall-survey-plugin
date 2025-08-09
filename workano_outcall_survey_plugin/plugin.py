@@ -1,9 +1,5 @@
 import logging
 
-from .survey.resource import SurveyListResource, SurveyAgentItemResource, SurveyQueueItemResource, \
-    SurveyQueueAverageItemResource, SurveyAgentAverageItemResource, QueueFeaturesListResource, QueueFeaturesItemResource, \
-    SurveyAllAgentAverageItemResource, SurveyAllQueueAverageItemResource, SurveyAgentInQueueAverageItemResource, SurveyAllAgentsInQueueAverageItemResource
-from .survey.services import build_survey_service, build_queuefeature_service
 from .db import init_db
 
 logger = logging.getLogger(__name__)
