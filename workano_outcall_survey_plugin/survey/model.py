@@ -48,6 +48,7 @@ class SurveyModel(Base):
     rate = Column(String(50), nullable=True)
     vm_message_id = Column(String(50), nullable=True)
     voicemail_id=Column(String(50), nullable=True)
+    type = Column(String(10), nullable=True)
 
     __table_args__ = (
         PrimaryKeyConstraint('id'), 

@@ -21,15 +21,10 @@ class OutcallSurveyHandler(handler.Handler):
         call_direction = self._agi.get_variable('WAZO_CALL_DIRECTION') #  == outbound
         if call_direction != 'outbound':
             return
-        outcall_survey = objects_workano_outcall_survey.OutcallSurvey(self._cursor, user_uuid)
-        print('outcall_survey ', outcall_survey.voicemail_mailbox,
-                outcall_survey.voicemail_id,
-                outcall_survey.voicemail_context,
-                outcall_survey.voicemail_threshold)
+        outcall_survey = objects_workano_outcall_survey.OutcallSurveyFeature(self._cursor, user_uuid)
         if outcall_survey.enabled:
             self._agi.set_variable('WAZO_SURVEY_ENABLE', '1')
             if outcall_survey.voicemail_id:
-                print('outcall_survey.voicemail_id', outcall_survey.voicemail_id)
                 self._agi.set_variable('__OUTCALL_SURVEY_VOICEMAIL_MAILBOX', outcall_survey.voicemail_mailbox)
                 self._agi.set_variable('__OUTCALL_SURVEY_VOICEMAIL_ID', outcall_survey.voicemail_id)
                 self._agi.set_variable('__OUTCALL_SURVEY_VOICEMAIL_CONTEXT', outcall_survey.voicemail_context)
@@ -97,6 +92,6 @@ class OutcallSurveyLogHandler(handler.Handler):
             call_id = self._agi.get_variable('WAZO_SIP_CALL_ID') or 'default_call_id'
             linked_id = self._agi.get_variable('CHANNEL(linkedid)') or 'default_linked_id'
 
-            objects_workano_outcall_survey.QueueSurvey(self._agi, self._cursor, tenant_uuid, destination_number,
+            objects_workano_outcall_survey.OutcallSurveyPersist(self._agi, self._cursor, tenant_uuid, destination_number,
                                         linked_id, call_id, vote_number)
             logger.debug('handler saved ')

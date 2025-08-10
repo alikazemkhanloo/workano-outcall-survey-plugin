@@ -12,7 +12,7 @@ class DBUpdateException(Exception):
     pass
 
 
-class OutcallSurvey(object):
+class OutcallSurveyFeature(object):
     def __init__(self, cursor, user_uuid):
         self.cursor = cursor
         self.user_uuid = user_uuid
@@ -24,7 +24,6 @@ class OutcallSurvey(object):
         arguments = (user_uuid,)
         self.cursor.execute(query, arguments)
         res = self.cursor.fetchone()
-        print('res from db', res)
         voicemail_res = None
         self.voicemail_mailbox = None
         self.voicemail_context = None
@@ -37,7 +36,6 @@ class OutcallSurvey(object):
             voicemail_arguments = (voicemail_id,)
             self.cursor.execute(voicemail_query, voicemail_arguments)  # Execute the query
             voicemail_res = self.cursor.fetchone()  # Fetch one result
-            print('voiemail res', voicemail_res, voicemail_res['mailbox'], voicemail_res['context'])
 
         self.enabled = res['enabled']
         self.voicemail_id = res['voicemail_id']
@@ -64,7 +62,7 @@ class OutcallSurveyUpdateMessageId(object):
 
 
 
-class QueueSurvey(object):
+class OutcallSurveyPersist(object):
     def __init__(self, agi, cursor, tenant_uuid, destination_number, linked_id, call_id, vote_number):
         self.agi = agi
         self.cursor = cursor
@@ -77,10 +75,10 @@ class QueueSurvey(object):
         timestamp = ct.strftime("%Y-%m-%d %H:%M:%S")
 
         survey_log_columns = [
-            'tenant_uuid', 'caller_id', 'linked_id', 'call_id', 'timestamp', 'rate'
+            'tenant_uuid', 'caller_id', 'linked_id', 'call_id', 'timestamp', 'rate', 'type'
         ]
 
-        query = "INSERT INTO plugin_survey ({}) VALUES (%s, %s, %s, %s, %s, %s)".format(
+        query = "INSERT INTO plugin_survey ({}) VALUES (%s, %s, %s, %s, %s, %s, 'outcall')".format(
             ', '.join(survey_log_columns))
         arguments = (self.tenant_uuid, self.destination_number, self.linked_id, self.call_id, timestamp, self.vote_number)
 
