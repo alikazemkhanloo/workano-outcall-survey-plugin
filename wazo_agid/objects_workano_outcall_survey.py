@@ -24,7 +24,7 @@ class OutcallSurvey(object):
         arguments = (user_uuid,)
         self.cursor.execute(query, arguments)
         res = self.cursor.fetchone()
-        print('res', res)
+        print('res from db', res)
         voicemail_res = None
         self.voicemail_mailbox = None
         self.voicemail_context = None
