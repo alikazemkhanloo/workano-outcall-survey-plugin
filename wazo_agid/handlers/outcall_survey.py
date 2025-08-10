@@ -26,6 +26,7 @@ class OutcallSurveyHandler(handler.Handler):
         if outcall_survey.enabled:
             self._agi.set_variable('WAZO_SURVEY_ENABLE', '1')
             if outcall_survey.voicemail_id:
+                print('outcall_survey.voicemail_id', outcall_survey.voicemail_id)
                 self._agi.set_variable('OUTCALL_SURVEY_VOICEMAIL_MAILBOX', outcall_survey.voicemail_mailbox)
                 self._agi.set_variable('OUTCALL_SURVEY_VOICEMAIL_ID', outcall_survey.voicemail_id)
                 self._agi.set_variable('OUTCALL_SURVEY_VOICEMAIL_CONTEXT', outcall_survey.voicemail_context)
