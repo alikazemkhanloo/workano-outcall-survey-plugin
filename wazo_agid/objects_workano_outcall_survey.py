@@ -37,6 +37,7 @@ class OutcallSurvey(object):
             voicemail_arguments = (voicemail_id,)
             self.cursor.execute(voicemail_query, voicemail_arguments)  # Execute the query
             voicemail_res = self.cursor.fetchone()  # Fetch one result
+            print('voiemail res', voicemail_res, voicemail_res['mailbox'], voicemail_res['context'])
 
         self.enabled = res['enabled']
         self.voicemail_id = res['voicemail_id']
