@@ -44,39 +44,20 @@ class OutcallSurveyVoiceMessageHandler(handler.Handler):
         if not os.path.exists(inbox_path):
             self._agi.verbose(f"INBOX path does not exist: {inbox_path}")
             return
-        txt_files = glob.glob(os.path.join(inbox_path, 'msg*.txt'))
-
-        # Sort files by last modified time (newest first)
-        txt_files.sort(key=lambda f: os.path.getmtime(f), reverse=True)
-
-        # Limit to last 5 files
-        last_txt_files = txt_files[:5]
-        self._agi.verbose(f'txt_files: {last_txt_files}')
-
+        vm_message_file = self._agi.get_variable('VM_MESSAGEFILE')
         message_id = None
-        for txt_file in last_txt_files:
-            with open(txt_file, 'r') as f:
-                content = f.read()
-                match = re.search(r'callerid=".*?"\s*<(\d+)>', content)
-                if match:
-                    file_caller_id = match.group(1)
-                    if destination_number in file_caller_id:
-                        msgid_match = re.search(r'^msg_id=(.+)', content, re.MULTILINE)
-                        if msgid_match:
-                            msg_id = msgid_match.group(1).strip()
-                            self._agi.verbose(f"[MATCH] Found msg_id: {msg_id} for caller ID {destination_number}")
-                            print(f"[MATCH] Found msg_id: {msg_id} for caller ID {destination_number}")
-                            message_id = msg_id
-                            objects_workano_outcall_survey.OutcallSurveyUpdateMessageId(self._cursor, linked_id, message_id, voicemail_id)
-                            return None
-                        else:
-                            self._agi.verbose('msgid not matched')
-                    else:
-                        self._agi.verbose('caller_id not matched')
-                else:
-                    self._agi.verbose('caller id not found')
-                
-        self._agi.verbose("[INFO] No matching voicemail msg_id found in last 5 messages.")
+
+        with open(vm_message_file+'.txt', 'r') as f:
+            content = f.read()
+            msgid_match = re.search(r'^msg_id=(.+)', content, re.MULTILINE)
+            if msgid_match:
+                msg_id = msgid_match.group(1).strip()
+                self._agi.verbose(f"[MATCH] Found msg_id: {msg_id} ")
+                message_id = msg_id
+                objects_workano_outcall_survey.OutcallSurveyUpdateMessageId(self._cursor, linked_id, message_id, voicemail_id)
+                return None
+            else:
+                self._agi.verbose(f"[NOTMATCH] Not found msg_id in vm_message_file: {vm_message_file} ")
         return None
 
 
