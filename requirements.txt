@@ -2,6 +2,7 @@ git+https://github.com/wazo-platform/wazo-confd-client.git
 git+https://github.com/wazo-platform/wazo-calld-client.git
 git+https://github.com/wazo-platform/wazo-auth-client.git
 git+https://github.com/wazo-platform/wazo-confd.git
+git+https://github.com/wazo-platform/wazo-agid.git
 git+https://github.com/wazo-platform/wazo-call-logd.git
 git+https://github.com/wazo-platform/xivo-lib-python.git
 git+https://github.com/wazo-platform/xivo-dao.git

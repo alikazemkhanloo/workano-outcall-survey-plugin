@@ -22,7 +22,10 @@ class OutcallSurveyHandler(handler.Handler):
         if call_direction != 'outbound':
             return
         outcall_survey = objects_workano_outcall_survey.OutcallSurvey(self._cursor, user_uuid)
-        print('outcall_survey mailbox', outcall_survey.voicemail_mailbox)
+        print('outcall_survey ', outcall_survey.voicemail_mailbox,
+                outcall_survey.voicemail_id,
+                outcall_survey.voicemail_context,
+                outcall_survey.voicemail_threshold)
         if outcall_survey.enabled:
             self._agi.set_variable('WAZO_SURVEY_ENABLE', '1')
             if outcall_survey.voicemail_id:
